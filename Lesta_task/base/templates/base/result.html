@@ -1,0 +1,50 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Результаты анализа{% endblock %}
+
+{% block content %}
+<div class="results">
+    <h2>Результаты анализа текста</h2>
+    
+    <div class="word-stats">
+        <h3>Статистика по словам</h3>
+        <table class="stats-table">
+            <thead>
+                <tr>
+                    <th>Слово</th>
+                    <th>Количество</th>
+                    <th>TF</th>
+                    <th>IDF</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for word in words %}
+                <tr>
+                    <td>{{ word.word }}</td>
+                    <td>{{ word.count }}</td>
+                    <td>{{ word.tf }}</td>
+                    <td>{{ word.idf }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="graphs">
+        <div class="graph">
+            <h3>Частота термина (TF)</h3>
+            <img src="data:image/png;base64,{{ tf_graph }}" alt="График TF">
+        </div>
+        <div class="graph">
+            <h3>Обратная частота документа (IDF)</h3>
+            <img src="data:image/png;base64,{{ idf_graph }}" alt="График IDF">
+        </div>
+        <div class="graph">
+            <h3>Количество упоминаний слов</h3>
+            <img src="data:image/png;base64,{{ count_graph }}" alt="График количества">
+        </div>
+    </div>
+    
+    <a href="/" class="btn">Анализировать другой файл</a>
+</div>
+{% endblock %}
