@@ -1,0 +1,11 @@
+venv
+private.key
+shh notre.txt
+ssh.bat
+__pycache__/
+private.key
+ssh.bat
+ssh.txt
+.env
+.idea/
+.vscode/
