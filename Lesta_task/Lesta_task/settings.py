@@ -4,8 +4,6 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-from dotenv import load_dotenv
-import os
 
 env_path = BASE_DIR / '.env'  # или '.env.local'
 load_dotenv(dotenv_path=env_path)
@@ -17,8 +15,6 @@ APP_VERSION = os.getenv("APP_VERSION", "unknown")
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY", "fallback-secret")
 DEBUG = os.getenv("DEBUG", "True") == "True"
-print("DB HOST =", os.getenv("DB_HOST"))
-print("DB_PASSWORD =", os.getenv('DB_PASSWORD'))
 
 DATABASES = {
     'default': {
