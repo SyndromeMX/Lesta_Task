@@ -17,7 +17,7 @@ Term Frequency на Django
 
 ---
 
-##⚙️ Структура проекта
+## ⚙️ Структура проекта
 Lesta/
 ├── base/                  # Основное Django-приложение
 ├── Lesta_task/            # Конфигурация Django
