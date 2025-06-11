@@ -17,7 +17,7 @@ Term Frequency на Django
 
 ---
 
-<pre><code>``` 
+<pre><code>
 Lesta/ 
 ├── base/ # Основное Django-приложение 
 ├── Lesta_task/ # Конфигурация Django 
@@ -27,7 +27,7 @@ Lesta/
 ├── .env # Переменные окружения 
 ├── Dockerfile # Docker-образ 
 ├── docker-compose.yml # Compose-конфигурация 
-└── manage.py # Django CLI ``` </code></pre>
+└── manage.py # Django CLI  </code></pre>
 ---
 Changelog
 
