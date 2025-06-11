@@ -1,0 +1,17 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Загрузка файла{% endblock %}
+
+{% block content %}
+<div class="upload-form">
+    <h2>Загрузите текстовый файл для анализа</h2>
+    <form method="post" enctype="multipart/form-data" class="form">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.file.label_tag }}
+            {{ form.file }}
+        </div>
+        <button type="submit" class="btn">Анализировать</button>
+    </form>
+</div>
+{% endblock %}
