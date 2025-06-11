@@ -17,8 +17,7 @@ Term Frequency на Django
 
 ---
 
-<pre> ## ⚙️ Структура проекта <code> Lesta/ ├── base/ # Основное Django-приложение ├── Lesta_task/ # Конфигурация Django ├── templates/ # HTML-шаблоны ├── static/ # Стили и иконка ├── db.sqlite3 # Локальная база данных ├── .env # Переменные окружения ├── Dockerfile # Docker-образ ├── docker-compose.yml # Compose-конфигурация └── manage.py # Django CLI </code> </pre>
-
+<pre><code>```plaintext Lesta/ ├── base/ # Основное Django-приложение ├── Lesta_task/ # Конфигурация Django ├── templates/ # HTML-шаблоны ├── static/ # Стили и иконка ├── db.sqlite3 # Локальная база данных ├── .env # Переменные окружения ├── Dockerfile # Docker-образ ├── docker-compose.yml # Compose-конфигурация └── manage.py # Django CLI ``` </code></pre>
 ---
 Changelog
 
