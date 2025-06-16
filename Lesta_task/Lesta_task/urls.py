@@ -26,6 +26,7 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('change-password/', views.change_password_view, name='change_password'),
+    path('delete-account/', views.delete_user_view, name='delete_account'),
     path('collections/', api_views.collection_list),
     path('collections/<int:collection_id>/', api_views.collection_detail),
     path('collections/<int:collection_id>/statistics/', api_views.collection_statistics),
@@ -35,6 +36,7 @@ urlpatterns = [
     path('documents/<int:document_id>/', api_views.document_content),
     path('documents/<int:document_id>/statistics/', api_views.document_statistics),
     path('documents/<int:document_id>/huffman/', api_views.document_huffman),
+    path('delete-account/', views.delete_user_view, name='delete_account'),
 
     re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 ]

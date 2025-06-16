@@ -216,3 +216,12 @@ def change_password_view(request):
     else:
         form = PasswordChangeCustomForm(user=request.user)
     return render(request, 'base/change_password.html', {'form': form})
+
+@login_required
+def delete_user_view(request):
+    if request.method == 'POST':
+        user = request.user
+        logout(request)
+        user.delete()
+        return redirect('register')
+    return render(request, 'base/delete_user.html')
