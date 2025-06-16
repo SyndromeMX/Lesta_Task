@@ -1,5 +1,5 @@
 import matplotlib
-matplotlib.use('Agg') 
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from django.shortcuts import render
 from .models import FileMetric
@@ -14,6 +14,12 @@ from io import BytesIO
 from django.http import JsonResponse
 import time
 from django.db.models import Avg, Max, Min
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
+from .forms import UserRegisterForm, PasswordChangeCustomForm
+
 
 
 def home(request):
@@ -21,6 +27,20 @@ def home(request):
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
             uploaded_file = request.FILES['file']
+
+            # Проверка на .txt
+            if not uploaded_file.name.endswith('.txt'):
+                FileMetric.objects.create(
+                    filename=uploaded_file.name,
+                    file_size=uploaded_file.size,
+                    processed=False,
+                    error_count=1,
+                )
+                return render(request, 'base/home.html', {
+                    'form': form,
+                    'error': 'Ошибка: можно загружать только .txt файлы.'
+                })
+
             fs = FileSystemStorage()
             filename = fs.save(uploaded_file.name, uploaded_file)
             file_path = fs.path(filename)
@@ -37,7 +57,10 @@ def home(request):
                     processed=False,
                     error_count=1,
                 )
-                return JsonResponse({"error": "Ошибка при чтении файла."}, status=500)
+                return render(request, 'base/home.html', {
+                    'form': form,
+                    'error': 'Ошибка при чтении файла.'
+                })
             finally:
                 os.remove(file_path)
 
@@ -131,7 +154,7 @@ def status_view(request):
 
 
 def metrics_view(request):
-    metrics = FileMetric.objects.filter(processed=True)
+    metrics = FileMetric.objects.filter(processed=True, error_count=0)
     count = metrics.count()
     min_time = metrics.aggregate(Min('processing_time'))['processing_time__min']
     max_time = metrics.aggregate(Max('processing_time'))['processing_time__max']
@@ -151,3 +174,45 @@ def version_view(request):
     return JsonResponse({
         "version": os.getenv("APP_VERSION", "unknown")
     })
+
+
+def register_view(request):
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = UserRegisterForm()
+    return render(request, 'base/register.html', {'form': form})
+
+
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'base/login.html', {'form': form})
+
+
+@login_required
+def logout_view(request):
+    logout(request)
+    return redirect('login')
+
+
+@login_required
+def change_password_view(request):
+    if request.method == 'POST':
+        form = PasswordChangeCustomForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = PasswordChangeCustomForm(user=request.user)
+    return render(request, 'base/change_password.html', {'form': form})

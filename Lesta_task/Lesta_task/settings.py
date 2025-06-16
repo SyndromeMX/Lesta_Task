@@ -16,10 +16,17 @@ APP_VERSION = os.getenv("APP_VERSION", "unknown")
 SECRET_KEY = os.getenv("SECRET_KEY", "fallback-secret")
 DEBUG = os.getenv("DEBUG", "True") == "True"
 
+ALLOWED_HOSTS = ['*']
+AUTH_USER_MODEL = 'base.User'
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('POSTGRES_DB', 'lesta_db'),
+        'USER': os.getenv('POSTGRES_USER', 'lesta_user'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'lesta_pass'),
+        'HOST': os.getenv('POSTGRES_HOST', 'db'),
+        'PORT': os.getenv('POSTGRES_PORT', '5432'),
     }
 }
 
@@ -34,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'base',
+    'rest_framework',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [

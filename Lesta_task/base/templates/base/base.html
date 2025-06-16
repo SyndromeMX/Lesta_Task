@@ -9,6 +9,11 @@
     <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
+    {% if error %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+    {% endif %}
     <div class="container">
         <header>
             <h1>Анализатор текста</h1>
